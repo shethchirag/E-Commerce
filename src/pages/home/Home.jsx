@@ -6,8 +6,11 @@ import Filter from "../../components/filter/Filter";
 import ProductCard from "../../components/productCard/ProductCard";
 import Track from "./../../components/track/Track";
 import Testimonial from "../../components/testimonial/Testimonial";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const cartItem = useSelector((state) => state.cart);
+  console.log(cartItem);
   const data = useContext(myContext);
   console.log(data);
   return (
