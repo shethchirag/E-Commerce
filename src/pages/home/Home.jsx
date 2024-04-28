@@ -10,9 +10,7 @@ import { useSelector } from "react-redux";
 
 const Home = () => {
   const cartItem = useSelector((state) => state.cart);
-  console.log(cartItem);
   const data = useContext(myContext);
-  console.log(data);
   return (
     <Layout>
       <HeroSection />
