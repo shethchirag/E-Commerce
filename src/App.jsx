@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import DashBoard from "./pages/admin/dashboard/DashBoard";
 import Home from "./pages/home/Home";
@@ -22,12 +22,33 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/order" element={<Order />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/dashboard" element={<DashBoard />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRouteForAdmin>
+                <DashBoard />
+              </ProtectedRouteForAdmin>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/productinfo/:id" element={<ProductInfo />} />
-          <Route path="/updateproduct" element={<UpdateProduct />} />
-          <Route path="/addproduct" element={<AddProduct />} />
+          <Route
+            path="/updateproduct"
+            element={
+              <ProtectedRouteForAdmin>
+                <UpdateProduct />
+              </ProtectedRouteForAdmin>
+            }
+          />
+          <Route
+            path="/addproduct"
+            element={
+              <ProtectedRouteForAdmin>
+                <AddProduct />
+              </ProtectedRouteForAdmin>
+            }
+          />
           <Route path="/*" element={<NoPage />} />
         </Routes>
         <ToastContainer />
@@ -37,3 +58,22 @@ const App = () => {
 };
 
 export default App;
+
+//user protected routes
+
+const ProtectedRouteForUser = ({ children }) => {
+  const user = localStorage.getItem("user");
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+  return <div>{children}</div>;
+};
+
+// admin protected routes
+const ProtectedRouteForAdmin = ({ children }) => {
+  const admin = JSON.parse(localStorage.getItem("user"));
+  if (admin.user.email === "shethchirag143@gmail.com") {
+    return children;
+  }
+  return <Navigate to="/login" />;
+};

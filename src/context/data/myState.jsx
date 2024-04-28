@@ -4,7 +4,7 @@ import myContext from "./MyContext";
 const MyState = (props) => {
   const [mode, setMode] = useState("light");
   const [loading, setLoading] = useState(false);
-  const user = {
+  const userProfile = {
     profile_url:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6uqtQ-JqOGQD_VrjhSnpfz58NZUV1XyUp2bF2QpCVA&s",
   };
@@ -18,7 +18,9 @@ const MyState = (props) => {
     }
   };
   return (
-    <myContext.Provider value={{ mode, toggleMode, user, loading, setLoading }}>
+    <myContext.Provider
+      value={{ mode, toggleMode, userProfile, loading, setLoading }}
+    >
       {props.children}
     </myContext.Provider>
   );

@@ -4,7 +4,8 @@ import myContext from "../../context/data/MyContext";
 import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, fireDB } from "../../firebase/FirebaseConfig";
-import { addDoc, collection } from "firebase/firestore";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import Loader from "./../../components/loder/Loader";
 
 function Signup() {
   const [name, setSetName] = useState("");
@@ -25,21 +26,24 @@ function Signup() {
         name: name,
         vid: users.user.uid,
         email: users.user.email,
+        time: Timestamp.now(),
       };
       const userRef = collection(fireDB, "users");
       await addDoc(userRef, user);
+      toast.success("Account created successfully");
       setSetName("");
       setEmail("");
       setPassword("");
-      toast.success("Account created successfully");
       setLoading(false);
     } catch (error) {
       toast.error(error.message);
+      setLoading(false);
     }
   };
 
   return (
     <div className=" flex justify-center items-center h-screen">
+      {loading && <Loader />}
       <div className=" bg-gray-800 px-10 py-10 rounded-xl ">
         <div className="">
           <h1 className="text-center text-white text-xl mb-4 font-bold">

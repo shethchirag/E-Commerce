@@ -7,8 +7,9 @@ import { Dialog, Transition } from "@headlessui/react";
 import { RxCross2 } from "react-icons/rx";
 
 const Navbar = () => {
-  const { mode, toggleMode, user } = useContext(myContext);
+  const { mode, toggleMode, userProfile } = useContext(myContext);
   const [open, setOpen] = React.useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <div className="bg-white sticky top-0 z-50  ">
       {/* Mobile menu */}
@@ -70,16 +71,17 @@ const Navbar = () => {
                       Order
                     </Link>
                   </div>
-
-                  <div className="flow-root">
-                    <Link
-                      to={"/dashboard"}
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                      style={{ color: mode === "dark" ? "white" : "" }}
-                    >
-                      admin
-                    </Link>
-                  </div>
+                  {user?.user?.email === "shethchirag143@gmail.com" && (
+                    <div className="flow-root">
+                      <Link
+                        to={"/dashboard"}
+                        className="-m-2 block p-2 font-medium text-gray-900"
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                      >
+                        admin
+                      </Link>
+                    </div>
+                  )}
 
                   <div className="flow-root">
                     <a
@@ -96,7 +98,7 @@ const Navbar = () => {
                     >
                       <img
                         className="inline-block w-10 h-10 rounded-full"
-                        src={user.profile_url}
+                        src={userProfile.profile_url}
                         alt="Dan_Abromov"
                       />{" "}
                     </Link>
@@ -206,13 +208,15 @@ const Navbar = () => {
                   >
                     Order
                   </Link>
-                  <Link
-                    to={"/dashboard"}
-                    className={"text-sm font-medium text-gray-700 "}
-                    style={{ color: mode === "dark" ? "white" : "" }}
-                  >
-                    Admin
-                  </Link>
+                  {user?.user?.email === "shethchirag143@gmail.com" && (
+                    <Link
+                      to={"/dashboard"}
+                      className={"text-sm font-medium text-gray-700 "}
+                      style={{ color: mode === "dark" ? "white" : "" }}
+                    >
+                      Admin
+                    </Link>
+                  )}
 
                   <a
                     className={
@@ -243,7 +247,7 @@ const Navbar = () => {
                   <a href="#" className={"flex items-center text-gray-700 "}>
                     <img
                       className="inline-block w-10 h-10 rounded-full"
-                      src={user.profile_url}
+                      src={userProfile.profile_url}
                       alt="Dan_Abromov"
                     />
                   </a>
